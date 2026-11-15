@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collections recovery - executive view</title>
+<style>
+:root{color-scheme:light;--page:#f4f3ef;--surface:#fcfcfb;--line:#e3e2dc;--ink:#0b0b0b;--ink2:#52514e;--ink3:#7b7a74;--series:#2a78d6;--series-soft:#b7d3f6;--crit:#d03b3b;--good:#0ca30c;--warn-bg:#fdf3dc;--warn-line:#f0d48a}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){color-scheme:dark;--page:#111110;--surface:#1a1a19;--line:#33332f;--ink:#f0efec;--ink2:#c3c2b7;--ink3:#8f8e85;--series:#3987e5;--series-soft:#184f95;--warn-bg:#2b2618;--warn-line:#5c4d1e}}
+:root[data-theme="dark"]{color-scheme:dark;--page:#111110;--surface:#1a1a19;--line:#33332f;--ink:#f0efec;--ink2:#c3c2b7;--ink3:#8f8e85;--series:#3987e5;--series-soft:#184f95;--warn-bg:#2b2618;--warn-line:#5c4d1e}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--page);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:20px 24px}
+.wrap{max-width:1360px;margin:0 auto;display:grid;gap:14px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.eyebrow{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+h1{font-size:26px;line-height:1.2;margin:4px 0 0;font-weight:650;text-wrap:balance;max-width:900px}
+.meta{font-size:12px;color:var(--ink3);text-align:right}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.tile .label{font-size:12.5px;color:var(--ink2)}
+.tile .value{font-size:32px;font-weight:650;line-height:1.15;margin-top:2px;font-variant-numeric:tabular-nums}
+.tile .note{font-size:12.5px;color:var(--ink2);margin-top:2px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;color:var(--ink2)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.mid{display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:14px}
+h2{font-size:14.5px;margin:0;font-weight:650}.sub{font-size:12.5px;color:var(--ink2);margin:2px 0 6px}
+svg{display:block;width:100%;height:auto;overflow:visible}svg text{font:11.5px system-ui,sans-serif;fill:var(--ink2)}svg .v{fill:var(--ink);font-weight:600}
+.bar{fill:var(--series)}.bar.dim{fill:var(--series-soft)}.hit{fill:transparent;cursor:default}.hit:focus{outline:none}
+.grid{stroke:var(--line);stroke-width:1}.zero{stroke:var(--ink2);stroke-width:1}
+.bottom{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+table{border-collapse:collapse;width:100%;font-size:13px}th{font-weight:600;color:var(--ink2);font-size:12px;text-align:left;border-bottom:1px solid var(--line);padding:4px 8px 4px 0}
+td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}td.n{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}tr:last-child td{border-bottom:0}
+.decision{background:var(--warn-bg);border-color:var(--warn-line)}.decision ol{margin:6px 0 0;padding-left:18px}.decision li{margin:3px 0}
+.foot{font-size:12px;color:var(--ink3)}details summary{cursor:pointer;color:var(--ink2);font-size:12.5px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--surface);padding:6px 9px;border-radius:6px;font-size:12px;line-height:1.35;opacity:0;transition:opacity .08s;z-index:9;max-width:240px}
+#tip b{font-size:13px}
+@media (max-width:1000px){.tiles{grid-template-columns:1fr 1fr}.mid,.bottom{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header><div><div class="eyebrow">Collections recovery · 1 Jan – 8 Aug 2026</div>
+<h1>Recovery did not improve. The reported +11% is March being three days longer than February.</h1></div>
+<div class="meta">Clean data: unique, successful payments only<br>Rs 126.8 Cr recovered, Jan–Jul · 30,000 accounts</div></header>
+
+<section class="tiles">
+ <div class="card tile"><div class="label">Reported improvement <span class="tag"><span class="dot" style="background:var(--crit)"></span>misleading</span></div><div class="value" id="t1"></div><div class="note">Feb → Mar total recovery. Feb has 28 days, Mar 31 (+10.7%).</div></div>
+ <div class="card tile"><div class="label">Same months, per calendar day <span class="tag"><span class="dot" style="background:var(--good)"></span>like for like</span></div><div class="value" id="t2"></div><div class="note" id="t2n"></div></div>
+ <div class="card tile"><div class="label">Underlying trend, whole period</div><div class="value" id="t3"></div><div class="note" id="t3n"></div></div>
+ <div class="card tile"><div class="label">Run-rate</div><div class="value" id="t4"></div><div class="note" id="t4n"></div></div>
+</section>
+
+<section class="mid">
+ <div class="card"><h2>What was reported: total per month</h2><div class="sub">Rs Cr. Swings of ±10% that follow the calendar.</div><svg id="c1" viewBox="0 0 400 210" role="img" aria-label="Total recovery per month"></svg></div>
+ <div class="card"><h2>What happened: recovery per day</h2><div class="sub">Rs lakh per calendar day. Flat, no break-point.</div><svg id="c2" viewBox="0 0 400 210" role="img" aria-label="Recovery per calendar day by month"></svg></div>
+ <div class="card"><h2>Does contacting a borrower raise payment?</h2><div class="sub" id="c3s"></div><svg id="c3" viewBox="0 0 420 210" role="img" aria-label="Lift in 7-day payment rate by channel"></svg></div>
+</section>
+
+<section class="bottom">
+ <div class="card"><h2>Numbers leadership should stop trusting</h2>
+ <table><thead><tr><th>Metric</th><th>Usual definition</th><th>Verified</th><th>Why</th></tr></thead><tbody id="trust"></tbody></table></div>
+ <div class="card decision"><h2>Decision on the Rs 10 Cr: do not commit it yet</h2>
+ <div class="sub" style="color:var(--ink)">No option shows a measurable return in this data. If one must be named: <b>better borrower targeting, in two stages.</b></div>
+ <ol><li><b>Now, about Rs 1 Cr:</b> fix payment-to-contact measurement and run a randomised hold-out on targeting.</li>
+ <li><b>Release the remaining Rs 9 Cr only if</b> the hold-out shows a lift of at least <b id="be"></b> (12-month break-even).</li>
+ <li><b>Downside is capped</b> at stage 1 instead of Rs 10 Cr. Expected return on today's evidence: nil.</li></ol></div>
+</section>
+
+<details class="card"><summary>Table view of the charts</summary><div id="tbl" style="margin-top:8px"></div></details>
+<div class="foot">Recovery = unique payments with status SUCCESS, timestamps in IST. Intervals are 95% confidence. Data covers 7.3 months, not 12; client, language and cost fields are absent. Method: notebooks/analysis.ipynb.</div>
+</div><div id="tip"></div>
+<script>
+const D = {"months": [{"label": "2026-01", "days": 31, "total": 18.722912759000028, "perday": 60.396492770967825, "contact": 23.58884679, "kept_rep": 48.52118305, "kept_ver": 3.29103886}, {"label": "2026-02", "days": 28, "total": 17.01424537599997, "perday": 60.76516205714275, "contact": 22.92672685, "kept_rep": 50.715563509999996, "kept_ver": 2.3873873899999998}, {"label": "2026-03", "days": 31, "total": 18.891237402000026, "perday": 60.939475490322664, "contact": 23.605109, "kept_rep": 49.599358970000004, "kept_ver": 2.3116779600000004}, {"label": "2026-04", "days": 30, "total": 17.513804340999982, "perday": 58.379347803333275, "contact": 22.52988048, "kept_rep": 50.079617830000004, "kept_ver": 3.25040128}, {"label": "2026-05", "days": 31, "total": 18.425027850000006, "perday": 59.43557370967744, "contact": 23.96064435, "kept_rep": 49.30015552, "kept_ver": 3.7495014}, {"label": "2026-06", "days": 30, "total": 17.555972696999998, "perday": 58.51990898999999, "contact": 24.02688604, "kept_rep": 49.42528736, "kept_ver": 4.100041}, {"label": "2026-07", "days": 31, "total": 18.724226507999987, "perday": 60.4007306709677, "contact": 22.81964025, "kept_rep": 49.124143180000004, "kept_ver": 2.4054982799999998}], "lift": [{"name": "Field", "lift": -0.2107020093, "lo": -0.4086083717, "hi": -0.0127956469, "rate": 1.6320936897, "n": 16053}, {"name": "SMS", "lift": 0.0333334529, "lo": -0.1497189813, "hi": 0.2163858871, "rate": 1.8761291518, "n": 21587}, {"name": "Voice", "lift": 0.0994584755, "lo": -0.1083064824, "hi": 0.3072234334, "rate": 1.9422541744, "n": 17248}, {"name": "WhatsApp", "lift": -0.0145216313, "lo": -0.1715811811, "hi": 0.1425379185, "rate": 1.8282740676, "n": 28825}], "k": {"feb_mar_total_pct": 11.031885249801654, "feb_mar_perday_pct": 0.28686409659504086, "feb_mar_perday_ci": [-5.8929810303119545, 6.979135363019608], "trend_mom_pct": -0.3613956884643569, "trend_mom_ci": [-1.2472222108551552, 0.5244308339264412], "per_day_lakh": 59.83369194952831, "annual_runrate_cr": 218.3929756157783, "pct_recovery_no_contact_7d": 91.4, "ptp_kept_reported": 49.53790134706266, "ptp_kept_verified": 3.1816746475655013, "dup_inflation_pct_avg": 1.9314285714285713, "baseline_7d_pct": 1.8427956989247312, "breakeven_12m_pct": 4.578901849660739, "breakeven_24m_pct": 2.2894509248303696, "targeted_rate": 7.88, "untargeted_rate": 7.7, "targeted_p": 0.237554056529097, "changepoint_p": 0.315}}, k = D.k, NS = "http://www.w3.org/2000/svg";
+const f = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d), $ = id => document.getElementById(id);
+function el(parent, tag, attrs, text) { const e = document.createElementNS(NS, tag); for (const a in attrs) e.setAttribute(a, attrs[a]); if (text != null) e.textContent = text; parent.appendChild(e); return e; }
+const tip = $("tip");
+function bindTip(node, lines) {
+  const show = ev => { tip.replaceChildren(); lines.forEach((l, i) => { const s = document.createElement(i ? "div" : "b"); s.textContent = l; tip.appendChild(s); });
+    const r = node.getBoundingClientRect(), x = ev.clientX ?? r.left + r.width / 2, y = ev.clientY ?? r.top;
+    tip.style.left = Math.min(x + 12, innerWidth - 250) + "px"; tip.style.top = Math.max(y - 44, 8) + "px"; tip.style.opacity = 1; };
+  node.addEventListener("pointermove", show); node.addEventListener("focus", show);
+  node.addEventListener("pointerleave", () => tip.style.opacity = 0); node.addEventListener("blur", () => tip.style.opacity = 0);
+}
+$("t1").textContent = f(k.feb_mar_total_pct) + "%";
+$("t2").textContent = f(k.feb_mar_perday_pct) + "%"; $("t2n").textContent = `Range ${f(k.feb_mar_perday_ci[0])}% to ${f(k.feb_mar_perday_ci[1])}%. Indistinguishable from zero.`;
+$("t3").textContent = f(k.trend_mom_pct) + "% / month"; $("t3n").textContent = `Range ${f(k.trend_mom_ci[0])}% to ${f(k.trend_mom_ci[1])}%. Rules out +11% a month.`;
+$("t4").textContent = "Rs " + k.per_day_lakh.toFixed(1) + " lakh / day"; $("t4n").textContent = `About Rs ${Math.round(k.annual_runrate_cr)} Cr a year, steady since January.`;
+$("be").textContent = "+" + k.breakeven_12m_pct.toFixed(1) + "%";
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul"];
+function columns(id, key, max, ticks, unit, dimOthers) {
+  const svg = $(id), L = 34, R = 8, T = 16, B = 26, W = 400, H = 210, pw = W - L - R, ph = H - T - B, y = v => T + ph - v / max * ph;
+  ticks.forEach(t => { el(svg, "line", { class: "grid", x1: L, x2: W - R, y1: y(t), y2: y(t) }); el(svg, "text", { x: L - 6, y: y(t) + 4, "text-anchor": "end" }, t); });
+  D.months.forEach((m, i) => { const cx = L + pw * (i + .5) / 7, bw = 22, top = y(m[key]), hl = i === 1 || i === 2;
+    el(svg, "path", { class: "bar" + (dimOthers && !hl ? " dim" : ""), d: `M${cx - bw / 2},${T + ph}V${top + 4}q0,-4 4,-4h${bw - 8}q4,0 4,4V${T + ph}z` });
+    el(svg, "text", { x: cx, y: H - 8, "text-anchor": "middle" }, MON[i]);
+    if (hl || !dimOthers && (i === 0 || i === 6)) el(svg, "text", { class: "v", x: cx, y: top - 5, "text-anchor": "middle" }, m[key].toFixed(1));
+    const hit = el(svg, "rect", { class: "hit", x: cx - pw / 14, y: T, width: pw / 7, height: ph, tabindex: 0, "aria-label": `${MON[i]} ${m[key].toFixed(1)} ${unit}` });
+    bindTip(hit, [`${m[key].toFixed(2)} ${unit}`, `${MON[i]} 2026 · ${m.days} days`, `Total Rs ${m.total.toFixed(2)} Cr`]); });
+  el(svg, "line", { class: "zero", x1: L, x2: W - R, y1: T + ph, y2: T + ph });
+}
+columns("c1", "total", 20, [0, 5, 10, 15, 20], "Rs Cr", true);
+columns("c2", "perday", 70, [0, 20, 40, 60], "Rs lakh per day", false);
+(function forest() {
+  $("c3s").textContent = `Extra payment rate in the 7 days after an effective contact, vs the ${k.baseline_7d_pct.toFixed(2)}% who pay in any week anyway. Percentage points, 95% range.`;
+  const svg = $("c3"), L = 78, R = 14, T = 12, B = 34, W = 420, H = 210, pw = W - L - R, ph = H - T - B, lo = -0.5, hi = 0.5, x = v => L + (v - lo) / (hi - lo) * pw;
+  [-0.4, -0.2, 0, 0.2, 0.4].forEach(t => { el(svg, "line", { class: t === 0 ? "zero" : "grid", x1: x(t), x2: x(t), y1: T, y2: T + ph }); el(svg, "text", { x: x(t), y: T + ph + 16, "text-anchor": "middle" }, t === 0 ? "0 (no effect)" : (t > 0 ? "+" : "−") + Math.abs(t).toFixed(1)); });
+  D.lift.forEach((c, i) => { const cy = T + ph * (i + .5) / D.lift.length;
+    el(svg, "text", { x: L - 10, y: cy + 4, "text-anchor": "end", class: "v" }, c.name);
+    el(svg, "line", { x1: x(c.lo), x2: x(c.hi), y1: cy, y2: cy, stroke: "var(--series)", "stroke-width": 2, "stroke-linecap": "round" });
+    el(svg, "circle", { cx: x(c.lift), cy, r: 5.5, fill: "var(--series)", stroke: "var(--surface)", "stroke-width": 2 });
+    const hit = el(svg, "rect", { class: "hit", x: L, y: cy - ph / 8, width: pw, height: ph / 4, tabindex: 0, "aria-label": `${c.name} lift ${f(c.lift, 2)} points` });
+    bindTip(hit, [`${f(c.lift, 2)} pts (${f(c.lo, 2)} to ${f(c.hi, 2)})`, `${c.name}: ${c.rate.toFixed(2)}% pay within 7 days`, `${c.n.toLocaleString("en-IN")} effective contacts`]); });
+})();
+const rows = [
+ ["Recovery growth", f(k.feb_mar_total_pct) + "% MoM", f(k.feb_mar_perday_pct) + "% per day", "Month length; no trend, no break-point in 220 days"],
+ ["Promises kept", k.ptp_kept_reported.toFixed(0) + "%", k.ptp_kept_verified.toFixed(0) + "%", "Status says KEPT; the money does not arrive"],
+ ["Payments credited to outreach", "68%", (100 - k.pct_recovery_no_contact_7d).toFixed(0) + "%", k.pct_recovery_no_contact_7d.toFixed(0) + "% of rupees arrive with no contact in the prior 7 days; a latest-campaign rule still credits 68%"],
+ ["Right-party contact rate", "77%", "6%", "Promise codes logged on calls nobody answered"],
+ ["Recovery level", "all raw rows", "−" + k.dup_inflation_pct_avg.toFixed(0) + "%", "Duplicate payment rows, every month alike"]];
+rows.forEach(r => { const tr = document.createElement("tr"); r.forEach((c, i) => { const td = document.createElement("td"); if (i === 1 || i === 2) td.className = "n"; td.textContent = c; tr.appendChild(td); }); $("trust").appendChild(tr); });
+(function table() { const t = document.createElement("table"), h = ["Month", "Days", "Total Rs Cr", "Rs lakh per day"]; const tr = document.createElement("tr"); h.forEach(x => { const th = document.createElement("th"); th.textContent = x; tr.appendChild(th); }); t.appendChild(tr);
+  D.months.forEach(m => { const r = document.createElement("tr"); [m.label, m.days, m.total.toFixed(2), m.perday.toFixed(2)].forEach(x => { const td = document.createElement("td"); td.textContent = x; r.appendChild(td); }); t.appendChild(r); });
+  D.lift.forEach(c => { const r = document.createElement("tr"); [c.name + " lift (pts)", "", f(c.lift, 2), `${f(c.lo, 2)} to ${f(c.hi, 2)}`].forEach(x => { const td = document.createElement("td"); td.textContent = x; r.appendChild(td); }); t.appendChild(r); });
+  $("tbl").appendChild(t); })();
+</script></body></html>

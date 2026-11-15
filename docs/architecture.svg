@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="system-ui,Arial,sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#52514e"/></marker></defs>
+<rect width="1280" height="640" fill="#ffffff"/>
+<text x="32" y="40" font-size="20" font-weight="650" fill="#0b0b0b">Collections analytics: production architecture</text>
+<text x="32" y="62" font-size="13" fill="#52514e">Daily run at 02:00 IST. Each run reprocesses the last 7 days, so late events and status changes are absorbed. Raw is never altered.</text>
+<text x="32" y="104" font-size="12" letter-spacing="1" fill="#7b7a74">SOURCE SYSTEMS</text>
+<rect x="32" y="116" width="200" height="36" rx="6" fill="#ffffff" stroke="#c9c8c1"/><text x="132" y="138" text-anchor="middle" font-size="12" fill="#0b0b0b">Core lending: accounts, borrowers</text>
+<rect x="32" y="162" width="200" height="36" rx="6" fill="#ffffff" stroke="#c9c8c1"/><text x="132" y="184" text-anchor="middle" font-size="12" fill="#0b0b0b">Dialler + telephony vendors</text>
+<rect x="32" y="208" width="200" height="36" rx="6" fill="#ffffff" stroke="#c9c8c1"/><text x="132" y="230" text-anchor="middle" font-size="12" fill="#0b0b0b">WhatsApp + SMS providers</text>
+<rect x="32" y="254" width="200" height="36" rx="6" fill="#ffffff" stroke="#c9c8c1"/><text x="132" y="276" text-anchor="middle" font-size="12" fill="#0b0b0b">Field app</text>
+<rect x="32" y="300" width="200" height="36" rx="6" fill="#ffffff" stroke="#c9c8c1"/><text x="132" y="322" text-anchor="middle" font-size="12" fill="#0b0b0b">Payment gateways</text>
+<rect x="32" y="346" width="200" height="36" rx="6" fill="#ffffff" stroke="#c9c8c1"/><text x="132" y="368" text-anchor="middle" font-size="12" fill="#0b0b0b">HR: agents</text>
+<path d="M232,134H250V364H232" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<line x1="250" y1="248" x2="274" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="278" y="104" font-size="12" letter-spacing="1" fill="#7b7a74">WAREHOUSE LAYERS</text>
+<rect x="278" y="186" width="124" height="124" rx="8" fill="#e7f0fc" stroke="#2a78d6"/>
+<text x="340.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">RAW</text>
+<text x="340.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">append-only,</text>
+<text x="340.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">as delivered</text>
+<text x="340.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">+ load time, file</text>
+<rect x="418" y="186" width="124" height="124" rx="8" fill="#e7f0fc" stroke="#2a78d6"/>
+<text x="480.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">STAGING</text>
+<text x="480.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">typed columns</text>
+<text x="480.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">1 row per raw row</text>
+<text x="480.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">no business logic</text>
+<rect x="558" y="186" width="124" height="124" rx="8" fill="#e7f0fc" stroke="#2a78d6"/>
+<text x="620.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">CLEAN</text>
+<text x="620.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">deduplicated</text>
+<text x="620.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">timestamps in IST</text>
+<text x="620.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">codes mapped, flags</text>
+<rect x="698" y="186" width="124" height="124" rx="8" fill="#e7f0fc" stroke="#2a78d6"/>
+<text x="760.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">GOLDEN</text>
+<text x="760.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">dims with history</text>
+<text x="760.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">facts: payment, call,</text>
+<text x="760.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">touch, promise</text>
+<text x="760.0" y="276" text-anchor="middle" font-size="11" fill="#52514e">account x day grid</text>
+<rect x="838" y="186" width="124" height="124" rx="8" fill="#e7f0fc" stroke="#2a78d6"/>
+<text x="900.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">FEATURE</text>
+<text x="900.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">point-in-time</text>
+<text x="900.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">account features</text>
+<text x="900.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">(no look-ahead)</text>
+<rect x="978" y="186" width="124" height="124" rx="8" fill="#e7f0fc" stroke="#2a78d6"/>
+<text x="1040.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">METRICS</text>
+<text x="1040.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">one SQL definition</text>
+<text x="1040.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">per KPI, per day</text>
+<text x="1040.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">and per month</text>
+<line x1="402" y1="248" x2="418" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="542" y1="248" x2="558" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="682" y1="248" x2="698" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="822" y1="248" x2="838" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="962" y1="248" x2="978" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="448" y="352" width="204" height="70" rx="8" fill="#fdf3dc" stroke="#d9a520"/>
+<text x="550.0" y="374" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">Data-quality gate</text>
+<text x="550.0" y="394" text-anchor="middle" font-size="11" fill="#52514e">contracts, keys, freshness,</text>
+<text x="550.0" y="410" text-anchor="middle" font-size="11" fill="#52514e">reconciliation to settlement file</text>
+<line x1="550" y1="352" x2="550" y2="254" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)" stroke-dasharray="5 4"/>
+<text x="518.0" y="307.0" font-size="11" fill="#52514e">pass</text>
+<rect x="448" y="460" width="204" height="52" rx="8" fill="#fbe9e7" stroke="#d03b3b"/>
+<text x="550.0" y="482" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">Quarantine</text>
+<text x="550.0" y="502" text-anchor="middle" font-size="11" fill="#52514e">failed batch held, owner alerted</text>
+<line x1="550" y1="422" x2="550" y2="460" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="556.0" y="445.0" font-size="11" fill="#52514e">fail</text>
+<path d="M760,186V160H1040V180" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="1126" y="186" width="124" height="124" rx="8" fill="#eaf6ea" stroke="#0c8a0c"/>
+<text x="1188.0" y="208" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">DASHBOARD</text>
+<text x="1188.0" y="228" text-anchor="middle" font-size="11" fill="#52514e">one screen</text>
+<text x="1188.0" y="244" text-anchor="middle" font-size="11" fill="#52514e">per-day default</text>
+<text x="1188.0" y="260" text-anchor="middle" font-size="11" fill="#52514e">last 3 days marked</text>
+<text x="1188.0" y="276" text-anchor="middle" font-size="11" fill="#52514e">provisional</text>
+<line x1="1102" y1="248" x2="1126" y2="248" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="688" y="352" width="144" height="70" rx="8" fill="#f4f3ef" stroke="#c9c8c1"/>
+<text x="760.0" y="374" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">Experiment registry</text>
+<text x="760.0" y="394" text-anchor="middle" font-size="11" fill="#52514e">hold-out assignment</text>
+<text x="760.0" y="410" text-anchor="middle" font-size="11" fill="#52514e">logged before treatment</text>
+<line x1="760" y1="352" x2="760" y2="312" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="902" y="352" width="184" height="86" rx="8" fill="#f4f3ef" stroke="#c9c8c1"/>
+<text x="994.0" y="374" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">Monitoring + alerts</text>
+<text x="994.0" y="394" text-anchor="middle" font-size="11" fill="#52514e">anomaly: 3 robust SD vs</text>
+<text x="994.0" y="410" text-anchor="middle" font-size="11" fill="#52514e">same weekday, 8 weeks;</text>
+<text x="994.0" y="426" text-anchor="middle" font-size="11" fill="#52514e">level shift, mix drift</text>
+<line x1="1040" y1="310" x2="1040" y2="352" stroke="#52514e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="1122" y="352" width="128" height="86" rx="8" fill="#f4f3ef" stroke="#c9c8c1"/>
+<text x="1186.0" y="374" text-anchor="middle" font-size="13.5" font-weight="650" fill="#0b0b0b">Late events</text>
+<text x="1186.0" y="394" text-anchor="middle" font-size="11" fill="#52514e">older than 7 days:</text>
+<text x="1186.0" y="410" text-anchor="middle" font-size="11" fill="#52514e">targeted rebuild</text>
+<text x="1186.0" y="426" text-anchor="middle" font-size="11" fill="#52514e">+ restatement log</text>
+<rect x="278" y="548" width="972" height="30" rx="6" fill="#f4f3ef" stroke="#c9c8c1"/><text x="764" y="568" text-anchor="middle" font-size="12.5" fill="#0b0b0b">Orchestrator: idempotent daily runs, merge on primary key, backfill by date range from RAW, code version recorded per run</text>
+<rect x="278" y="588" width="972" height="30" rx="6" fill="#f4f3ef" stroke="#c9c8c1"/><text x="764" y="608" text-anchor="middle" font-size="12.5" fill="#0b0b0b">Lineage + run log: rows in, rejected by rule, rows out, per table and run (golden.audit_cleaning)</text>
+</svg>

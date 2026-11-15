@@ -1,0 +1,18 @@
+source_table,raw_rows,rejected_rows,corrected_or_flagged_rows,golden_rows,rule
+payments,25500,500,7586,25000,Rejected: duplicate rows per payment_id. Flagged: reused / missing reference. Only SUCCESS rows count as recovery (is_recovery).
+calls,91350,1402,60495,89948,"Rejected: duplicate call_id rows + calls outside window. Corrected: timezone to IST, missing agent, conflicting timestamp."
+call_dispositions,35000,0,3926,35000,Corrected: PROMISE_TO_PAY mapped to PTP. All rows kept; latest per call flagged final.
+call_attempts,120000,0,2400,120000,Flagged: missing vendor_id.
+agents,30000,29000,0,1000,Rejected: superseded versions; latest updated_at kept per agent_id.
+borrowers,30600,19585,0,11015,Rejected: 600 exact duplicates + superseded versions.
+accounts,30000,0,455,30000,"Flagged: missing borrower_id (kept, geography = UNKNOWN)."
+whatsapp_events,60600,600,0,60000,Rejected: exact duplicate rows.
+sms_events,45000,0,0,45000,No change.
+field_visits,25000,0,250,25000,Flagged: missing scheduled_at.
+promises_to_pay,18000,0,4273,18000,Flagged: reported KEPT with no successful payment in the promise window.
+daily_targeting,45000,0,0,45000,No change.
+agent_sessions,15000,0,7494,15000,Corrected: UTC sessions shifted to IST.
+account_status_history,60000,0,30191,60000,Flagged: recorded_at earlier than event_at.
+complaints,8000,0,4101,8000,Flagged: OPEN/INVESTIGATING but has a resolution date.
+campaigns,120,0,0,120,No change.
+vendor_telephony,15,0,0,15,No change.
