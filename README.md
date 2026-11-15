@@ -2,6 +2,8 @@
 
 **Answer: no.** Recovery has been flat at about Rs 59.8 lakh a day since January. The only +11% month-on-month move in the data is February to March, and March is 10.7% longer than February. Per calendar day the change is +0.3% (95% range −5.9% to +7.0%).
 
+**Live dashboard:** https://sarthak14-r.github.io/collections-analytics-assignment/dashboard/dashboard.html
+
 ## Deliverables
 
 | # | Deliverable | Where |
